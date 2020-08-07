@@ -1,20 +1,58 @@
 // 載入 express 並建構應用程式伺服器
 const express = require('express')
 const app = express()
+const exphbs = require('express-handlebars')
 
+const Record = require('./model/record')
+const Category = require('./model/category')
 
 // 引用路由器
-// const routes = require('./routes')
+const routes = require('./routes')
 
-//handlebars
-// const exphbs = require('express-handlebars')
+// 如果在 Heroku 環境則使用 process.env.PORT
+// 否則為本地環境，使用 3000 
+const PORT = process.env.PORT || 3000
 
-// 設定首頁路由
+
+
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
+
+
+const bodyParser = require('body-parser')
+
+// 載入 method-override
+const methodOverride = require('method-override')
+require('./config/mongoose') //招喚config mongoose連線
+
+
+
+app.use(bodyParser.urlencoded({ extended: true }))
+
+//method override
+app.use(methodOverride('_method'))
+
+//setting static files
+app.use(express.static('public'))
+
+// // 設定首頁路由
+// app.get('/', (req, res) => {
+//   res.send('hello worldhelloworld')
+// })
+
+
+// app.js
+// ...
+// routes setting
 app.get('/', (req, res) => {
-  res.send('hello world')
+  res.render('index')
 })
+// ...
 
-// 設定 port 3000
-app.listen(3000, () => {
-  console.log('App is running on http://localhost:3000')
+// 將 request 導入路由器
+app.use(routes)
+
+// start and listen on the Express server
+app.listen(PORT, () => {
+  console.log(`Express is listening on http://localhost:${PORT}`)
 })
