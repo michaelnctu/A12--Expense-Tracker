@@ -5,7 +5,7 @@ db.once('open', () => {
   console.log('mongodb conneted!')
   Record.create(
     {
-      name: "早餐",
+      name: "午餐",
       category: "餐飲食品",
       date: "2020-08-03",
       amount: "80"
@@ -20,7 +20,7 @@ db.once('open', () => {
       name: "房租",
       category: "家居物業",
       date: "2020-08-03",
-      amount: "25000"
+      amount: "120000"
     },
     {
       name: "搭公車",
@@ -30,7 +30,7 @@ db.once('open', () => {
     }
   )
     .then(() => {
-      console.log('recordSeeder done!')
+      console.log('recordSeeder is successful!')
       db.close()
     })
 })
