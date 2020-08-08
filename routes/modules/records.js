@@ -25,6 +25,7 @@ router.post('/', (req, res) => {
 //edit page
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
+  console.log(id)
   return Records.findById(id)
     .lean()
     .then((record => res.render('edit', { record })))
@@ -34,6 +35,7 @@ router.get('/:id/edit', (req, res) => {
 // edit expense
 router.put('/:id', (req, res) => {
   const id = req.params.id
+  console.log(req.body)
   const { name, category, date, amount } = req.body
 
   return Records.findById(id)
