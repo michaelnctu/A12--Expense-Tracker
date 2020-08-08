@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express()
 const exphbs = require('express-handlebars')
+const Handlebars = require('handlebars')
 
 const Record = require('./model/record')
 const Category = require('./model/category')
@@ -26,7 +27,6 @@ const methodOverride = require('method-override')
 require('./config/mongoose') //招喚config mongoose連線
 
 
-
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //method override
@@ -35,18 +35,21 @@ app.use(methodOverride('_method'))
 //setting static files
 app.use(express.static('public'))
 
+Handlebars.registerHelper('Emoji', function (category, currentCategory, options) {
+  if (category === currentCategory) {
+    return options.fn(this)
+  }
+  return options.inverse(this)
+})
+
 // // 設定首頁路由
+
 // app.get('/', (req, res) => {
 //   res.send('hello worldhelloworld')
 // })
 
 
 // app.js
-// ...
-// routes setting
-app.get('/', (req, res) => {
-  res.render('index')
-})
 // ...
 
 // 將 request 導入路由器
