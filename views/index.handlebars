@@ -2,10 +2,37 @@
 
 <div class="d-flex justify-content-around mt-3">
   <h4 class="font-weight-bold">Total:</h4>
-  <h1 class="text-success">{{totalAmount}}</h1>
-  <span class="d-flex align-items-center">TWD</pan>
+  <h1 class="text-success">{{totalAmount}} TWD</h1>
+
+  <button type="button" id="btn-filter" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+    aria-expanded="false">
+    <i class="fas fa-filter"></i>
+  </button>
+
+  {{!-- 
+  <form action="/filter"> --}}
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="/living">家居物業</a>
+    <a class="dropdown-item" href="/transp">交通出行</a>
+    <a class="dropdown-item" href="/fun">休閒娛樂</a>
+    <a class="dropdown-item" href="/food">餐飲食品</a>
+    <a class="dropdown-item" href="/other">其他</a>
+  </div>
+  {{!-- {{#each categories}}
+      <button class="dropdown-item" name="by" value="{{this.title}}"><i class="{{this.icon}}"></i>
+        {{this.title}}
+      </button>
+      {{/each}}
+    </div>
+  </form>
+ --}}
+
+
 </div>
+
 <hr>
+
+
 
 {{!-- 帳目表 --}}
 

@@ -38,15 +38,25 @@ router.put('/:id', (req, res) => {
 
   return Records.findById(id)
     .then(record => {
-      record.name
-      record.category
-      record.date
-      record.amount
+      record.name = name
+      record.category = category
+      record.date = date
+      record.amount = amount
       return record.save()
     })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
+
+//delete
+router.delete('/:id', (req, res) => {
+  const id = req.params.id
+  return Records.findById(id)
+    .then(record => record.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 
 
 
