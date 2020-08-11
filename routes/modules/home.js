@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
     .lean()
     .sort({ date: 'desc' })
     .then(records => {
+      console.log(records)
       totalAmount = records.map(record => record.amount).reduce((accumulator, currentValue) => { return accumulator + currentValue })
       Categorys.find()
         .lean()

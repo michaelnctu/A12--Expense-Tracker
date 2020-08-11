@@ -12,7 +12,7 @@ const home = require('./modules/home')
 // 引入 sort 模組程式碼
 const filter = require('./modules/filter')
 
-// 將網址結構符合 / 字串的 request 導向 home 模組 
+// 將網址結構符合 導向 home 模組 
 router.use('/', home)
 
 router.use('/records', records)
