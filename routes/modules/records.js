@@ -30,7 +30,9 @@ router.get('/:id/edit', (req, res) => {
   console.log(id)
   return Records.findById(id)
     .lean()
-    .then((record => res.render('edit', { record })))
+    .then(record =>
+      // console.log('record是', record))
+      res.render('edit', { record }))
     .catch(error => console.log(error))
 })
 

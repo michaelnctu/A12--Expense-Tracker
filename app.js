@@ -42,15 +42,16 @@ Handlebars.registerHelper('Emoji', function (category, currentCategory, options)
   return options.inverse(this)
 })
 
-// // 設定首頁路由
+// edit選單中 可使選單停留在某一選項
 
-// app.get('/', (req, res) => {
-//   res.send('hello worldhelloworld')
-// })
+Handlebars.registerHelper('selectedOption', function (value, currentValue) {
+  if (value === currentValue) {
+    return 'selected'
+  } else {
+    return ''
+  }
+})
 
-
-// app.js
-// ...
 
 // 將 request 導入路由器
 app.use(routes)
