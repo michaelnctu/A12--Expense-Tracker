@@ -20,27 +20,26 @@ router.get("/:category", (req, res) => {
     other: '其他'
   }
 
-  const modelCategory = categoryList[category] //model 中之類別 用於之後的find
+  const modelCategory = categoryList[category] //model中之類別為中文 用於之後的find
 
 
-  let totalAmount = 0
 
-  console.log(modelCategory)
+  console.log(modelCategory) //檢查類別
+
   if (category === 'all') {
     res.redirect('/')
   } else {
-    return Records.find({ category: modelCategory }) // 以類別做篩選
+    return Records.find({ 'category': modelCategory }) // 以類別做篩選
       .lean() // 把 Mongoose 的 Model 物件轉換成乾淨的 JavaScript 資料陣列
-      // .then(records => {
-      //   totalAmount = records.map(record => record.amount).reduce((accumulator, currentValue) => { return accumulator + currentValue }, 0)
-      //   Categorys.find()
-      //     .lean()
-      //     .then(categories => {
-      //       console.log(records)
-      //       res.render('index', { records, totalAmount, categories })
-      //     })
-      // })
-      .then(records => console.log(records))
+      .then(records => {
+        totalAmount = records.map(record => record.amount).reduce((accumulator, currentValue) => { return accumulator + currentValue }, 0)
+        Categorys.find()
+          .lean()
+          .then(categories => {
+            console.log(records)
+            res.render('index', { records, totalAmount, categories })
+          })
+      })
 
       .catch(error => console.log(error))
 

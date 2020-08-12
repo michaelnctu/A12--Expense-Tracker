@@ -9,14 +9,13 @@ const Categorys = require('../../model/category') //載入 category model
 // index
 router.get('/', (req, res) => {
 
-  let totalAmount = 0
 
   return Records.find()
     .lean()
     .sort({ date: 'desc' })
     .then(records => {
       console.log(records)
-      totalAmount = records.map(record => record.amount).reduce((accumulator, currentValue) => { return accumulator + currentValue })
+      totalAmount = records.map(record => record.amount).reduce((accumulator, currentValue) => { return accumulator + currentValue }, 0)
       Categorys.find()
         .lean()
         .sort({ _id: 'asc' })
@@ -31,3 +30,5 @@ router.get('/', (req, res) => {
 
 
 module.exports = router
+
+
