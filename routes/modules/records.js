@@ -3,7 +3,7 @@
 const express = require('express')
 const router = express.Router()
 
-const Records = require('../../model/record') // 載入 restaurant model
+const Records = require('../../model/record') // 載入 restaurant model ..代表目前位置之父層
 
 
 // show add restaurant page
