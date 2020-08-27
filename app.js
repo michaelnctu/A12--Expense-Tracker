@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const exphbs = require('express-handlebars')
 const Handlebars = require('handlebars')
+const session = require('express-session')
 
 const Record = require('./model/record')
 const Category = require('./model/category')
@@ -20,6 +21,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 
+
 const bodyParser = require('body-parser')
 
 // 載入 method-override
@@ -28,6 +30,12 @@ require('./config/mongoose') //招喚config mongoose連線
 
 
 app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 
 //method override
 app.use(methodOverride('_method'))
