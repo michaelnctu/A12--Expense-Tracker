@@ -69,11 +69,10 @@ router.delete('/:id', (req, res) => {
 
 
 
-module.exports = router
 
 
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
+  const id = req.params.ids
   return Todo.findById(id)
     .lean()
     .then(todo => res.render('edit', { todo }))
@@ -93,3 +92,5 @@ router.put('/:id', (req, res) => {
     .then(() => res.redirect(`/todos/${id}`))
     .catch(error => console.log(error))
 })
+
+module.exports = router
