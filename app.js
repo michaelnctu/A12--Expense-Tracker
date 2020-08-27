@@ -4,7 +4,7 @@ const app = express()
 const exphbs = require('express-handlebars')
 const Handlebars = require('handlebars')
 const session = require('express-session')
-
+const usePassport = require('./config/passport')
 const Record = require('./model/record')
 const Category = require('./model/category')
 
@@ -59,7 +59,7 @@ Handlebars.registerHelper('selectedOption', function (value, currentValue) {
     return ''
   }
 })
-
+usePassport(app)
 
 // 將 request 導入路由器
 app.use(routes)

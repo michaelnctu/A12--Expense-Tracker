@@ -8,17 +8,19 @@ router.get('/login', (req, res) => {
 
 })
 
-router.get('/register', (req, res) => {
-
-  res.render('register')
-
-})
 
 // 加入 middleware，驗證 reqest 登入狀態
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/users/login'
 }))
+
+router.get('/register', (req, res) => {
+
+  res.render('register')
+
+})
+
 
 
 
