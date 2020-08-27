@@ -22,6 +22,10 @@ router.get('/register', (req, res) => {
 })
 
 
+router.get('/logout', (req, res) => {
+  req.logout()   //是 Passport.js 提供的函式
+  res.redirect('/users/login')
+})
 
 
 router.post('/register', (req, res) => {
