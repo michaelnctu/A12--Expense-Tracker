@@ -21,4 +21,4 @@ const recordSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('Record', recordSchema)
+module.exports = mongoose.model('Record', recordSchema)  //reocrd為資料庫名稱
