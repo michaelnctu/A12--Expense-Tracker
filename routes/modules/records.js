@@ -15,8 +15,9 @@ router.get('/create', (req, res) => {
 // create / update restaurant  
 router.post('/', (req, res) => {
   const { name, category, date, amount } = req.body
+  const userId = req.user._id
 
-  return Records.create(req.body)
+  return Records.create({ name, category, date, amount, userId })
     .then(() => res.redirect('/')) //回到根目錄
     .catch(error => console.log(error))
 
@@ -26,24 +27,25 @@ router.post('/', (req, res) => {
 
 //進入到edit page
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
-  console.log(id)
-  return Records.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Records.findOne({ _id, userId })
     .lean()
-    .then(record =>
-      // console.log('record是', record))
-      res.render('edit', { record }))
+    .then(record => {
+      // console.log('----', record)
+      res.render('edit', { record })
+    })
     .catch(error => console.log(error))
 })
 
 
 // edit expense
 router.put('/:id', (req, res) => {
-  const id = req.params.id
-  console.log()
+  const _id = req.params.id
+  const userId = req.user._id
   const { name, category, date, amount } = req.body
 
-  return Records.findById(id)
+  return Records.findOne({ _id, userId })
     .then(record => {
       record.name = name
       record.category = category
@@ -59,8 +61,9 @@ router.put('/:id', (req, res) => {
 
 //delete
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  return Records.findById(id)
+  const _id = req.params.id
+  const userId = req.user._id
+  return Records.findOne({ _id, userId })
     .then(record => record.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
@@ -69,28 +72,14 @@ router.delete('/:id', (req, res) => {
 
 
 
+// router.get('/:id/edit', (req, res) => {
+//   const id = req.params.ids
+//   const userId = req.user._id
+//   return Todo.findOne({ _id, userId })
+//     .lean()
+//     .then(todo => res.render('edit', { todo }))
+//     .catch(error => console.log(error))
+// })
 
-
-router.get('/:id/edit', (req, res) => {
-  const id = req.params.ids
-  return Todo.findById(id)
-    .lean()
-    .then(todo => res.render('edit', { todo }))
-    .catch(error => console.log(error))
-})
-
-
-router.put('/:id', (req, res) => {
-  const id = req.params.id
-  const { name, isDone } = req.body
-  return Todo.findById(id)
-    .then(todo => {
-      todo.name = name
-      todo.isDone = isDone === 'on'
-      return todo.save()
-    })
-    .then(() => res.redirect(`/todos/${id}`))
-    .catch(error => console.log(error))
-})
 
 module.exports = router

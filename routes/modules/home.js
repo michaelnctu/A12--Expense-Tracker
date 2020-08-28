@@ -8,10 +8,9 @@ const Categorys = require('../../model/category') //載入 category model
 
 // index
 router.get('/', (req, res) => {
-  console.log("records印出來", Records)
-  console.log("type是", typeof class Records { })
+  const userId = req.user._id
 
-  return Records.find()
+  return Records.find({ userId })
     .lean()
     .sort({ date: 'desc' })
     .then(records => {
