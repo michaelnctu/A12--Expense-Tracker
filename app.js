@@ -8,7 +8,8 @@ const usePassport = require('./config/passport')
 const Record = require('./model/record')
 const Category = require('./model/category')
 
-// 引用路由器
+const flash = require('connect-flash')   // flash message
+
 const routes = require('./routes')
 
 // 如果在 Heroku 環境則使用 process.env.PORT
@@ -61,12 +62,17 @@ Handlebars.registerHelper('selectedOption', function (value, currentValue) {
 })
 usePassport(app)
 
+app.use(flash())  // 掛載套件
+
 app.use((req, res, next) => {
-  
-  res.locals.isAuthenticated = req.isAuthenticated()
-  res.locals.user = req.user
+  res.locals.isAuthenticated = req.isAuthenticated()  //把 req.isAuthenticated() 回傳的布林值，交接給 res 使用
+  res.locals.user = req.user //把使用者資料交接給 res 使用
+  res.locals.success_msg = req.flash('success_msg')  // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash('warning_msg')  // 設定 warning_msg 訊息
   next()
 })
+
+
 
 // 將 request 導入路由器
 app.use(routes)
