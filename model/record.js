@@ -15,11 +15,15 @@ const recordSchema = new Schema({
     type: String,
     required: true
   },
+  merchant: {
+    type: String,
+    required: false
+  },
   amount: {
     type: Number,
     required: true
   },
-   userId: {  // 加入關聯設定
+  userId: {  // 加入關聯設定
     type: Schema.Types.ObjectId,
     ref: 'User',
     index: true,

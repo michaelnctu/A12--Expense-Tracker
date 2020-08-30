@@ -1,10 +1,22 @@
 const express = require('express')
 const router = express.Router()
-
+const monthRange = require('../../model/month')
 const Records = require('../../model/record')
 const Categorys = require('../../model/category')
-
-//filter
+const monthList = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
 
 router.get("/:category", (req, res) => {
 
@@ -22,8 +34,6 @@ router.get("/:category", (req, res) => {
 
   const modelCategory = categoryList[category] //model中之類別為中文 用於之後的find
 
-
-
   console.log(modelCategory) //檢查類別
 
   if (category === 'all') {
@@ -37,7 +47,7 @@ router.get("/:category", (req, res) => {
           .lean()
           .then(categories => {
             console.log(records)
-            res.render('index', { records, totalAmount, categories })
+            res.render('index', { records, totalAmount, categories, monthList })
           })
       })
 
@@ -46,6 +56,34 @@ router.get("/:category", (req, res) => {
   }
 
 })
+
+
+
+
+router.post("/month", (req, res) => {
+  const selectMonth = req.body.month
+  console.log('req', selectMonth)  //req.month
+
+
+  return Records.find({ date: monthRange[selectMonth] })
+    .lean()
+    .sort({ date: 'desc' })
+    .then(records => {
+      console.log(records)
+      totalAmount = records.map(record => record.amount).reduce((accumulator, currentValue) => { return accumulator + currentValue }, 0)
+      Categorys.find()
+        .lean()
+        .sort({ _id: 'asc' })
+        .then(categories => {
+          res.render('index', { records, totalAmount, categories, monthList, selectMonth })
+        })
+        .then()
+        .catch(error => console.log(error))
+    })
+    .catch(error => console.log(error))
+})
+
+
 
 
 module.exports = router

@@ -14,10 +14,10 @@ router.get('/create', (req, res) => {
 
 // create / update restaurant  
 router.post('/', (req, res) => {
-  const { name, category, date, amount } = req.body
+  const { name, category, date, amount, merchant } = req.body
   const userId = req.user._id
 
-  return Records.create({ name, category, date, amount, userId })
+  return Records.create({ name, category, date, amount, userId, merchant })
     .then(() => res.redirect('/')) //回到根目錄
     .catch(error => console.log(error))
 
@@ -43,10 +43,11 @@ router.get('/:id/edit', (req, res) => {
 router.put('/:id', (req, res) => {
   const _id = req.params.id
   const userId = req.user._id
-  const { name, category, date, amount } = req.body
+  const { name, category, date, amount, merchant } = req.body
 
   return Records.findOne({ _id, userId })
     .then(record => {
+      record.merchant = merchant
       record.name = name
       record.category = category
       record.date = date
@@ -69,17 +70,6 @@ router.delete('/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-
-
-
-// router.get('/:id/edit', (req, res) => {
-//   const id = req.params.ids
-//   const userId = req.user._id
-//   return Todo.findOne({ _id, userId })
-//     .lean()
-//     .then(todo => res.render('edit', { todo }))
-//     .catch(error => console.log(error))
-// })
 
 
 module.exports = router

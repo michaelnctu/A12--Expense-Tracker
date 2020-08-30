@@ -16,6 +16,9 @@ const users = require('./modules/users')
 
 const { authenticator } = require('../middleware/auth')  // 掛載 middleware
 
+const month = require('./modules/month')
+
+
 // 將網址結構符合 導向 home 模組 
 
 router.use('/records', authenticator, records)
