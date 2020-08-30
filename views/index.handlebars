@@ -4,37 +4,54 @@
   <h4 class="font-weight-bold">Total:</h4>
   <h1 class="text-success">{{totalAmount}} TWD</h1>
 
+  <form action="/filter" method="POST">
 
-  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-    aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-filter"></i>
-  </a>
+    {{!-- <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+      <i class="fas fa-filter"></i>
+    </a> --}}
 
-  <form action="/month" method="POST">
+
     <div class="form-group">
       <select class="form-control" name="month" id="exampleFormControlSelect1" onchange="submit()" placeholder="month">
 
-        {{#if selectMonth}}<option>{{selectMonth}}</option>{{/if}}
-        <option value="">全部月份</option>
+
+        <option value=""> 全部月份</option>
+        {{!-- <option value="January" {{#selectedOption selectMonth 'January' }} {{/selectedOption}}> 一月</option>
+        <option value=""> 你選擇的日期{{selectMonth}} </option> --}}
+
         {{#each monthList}}
-        <option value="{{this}}">{{this}}</option>
+        <option value="{{this}}" {{#selectedOption selectMonth '{{this}}' }} {{/selectedOption}}> {{this}}</option>
         {{/each}}
       </select>
     </div>
+
+
+    <div class="form-group">
+      <select class="form-control btn btn-secondary" name="category" id="exampleFormControlSelect1" onchange="submit()"
+        placeholder="category">
+
+        <option value=""> 全部類別</option>
+        <option value="living" {{#selectedOption selectCategory "家居物業"}} {{/selectedOption}}>家居物業</option>
+        <option value="transp" {{#selectedOption selectCategory "交通出行"}} {{/selectedOption}}>交通出行</option>
+        <option value="fun" {{#selectedOption selectCategory "休閒娛樂"}} {{/selectedOption}}>休閒娛樂</option>
+        <option value="food" {{#selectedOption selectCategory "餐飲食品"}} {{/selectedOption}}>餐飲食品</option>
+        <option value="other" {{#selectedOption selectCategory "其他" }} {{/selectedOption}}>其他</option>
+
+      </select>
+    </div>
+
+
+
+    {{!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <a class="dropdown-item" href="/living">家居物業</a>
+      <a class="dropdown-item" href="/transp">交通出行</a>
+      <a class="dropdown-item" href="/fun">休閒娛樂</a>
+      <a class="dropdown-item" href="/food">餐飲食品</a>
+      <a class="dropdown-item" href="/other">其他</a>
+      <a class="dropdown-item" href="/all">返回全部</a>
+    </div> --}}
   </form>
-
-
-
-
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="/living">家居物業</a>
-    <a class="dropdown-item" href="/transp">交通出行</a>
-    <a class="dropdown-item" href="/fun">休閒娛樂</a>
-    <a class="dropdown-item" href="/food">餐飲食品</a>
-    <a class="dropdown-item" href="/other">其他</a>
-    <a class="dropdown-item" href="/all">返回全部</a>
-  </div>
-
 
 
 </div>
@@ -53,6 +70,9 @@
 
     <tr>
       <td><i class="
+
+
+
                     {{#Emoji this.category '家居物業'}} fas fa-home {{/Emoji}}
                     {{#Emoji this.category '交通出行'}} fas fa-shuttle-van {{/Emoji}}
                     {{#Emoji this.category '休閒娛樂'}} fas fa-grin-beam {{/Emoji}}

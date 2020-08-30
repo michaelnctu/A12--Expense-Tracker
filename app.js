@@ -51,15 +51,21 @@ Handlebars.registerHelper('Emoji', function (category, currentCategory, options)
   return options.inverse(this)
 })
 
+
+
 // edit選單中 可使選單停留在某一選項
 
 Handlebars.registerHelper('selectedOption', function (value, currentValue) {
-  if (value === currentValue) {
+  const newvalue = value
+  const newcrv = currentValue   //確保所有引數重新洗過
+  if (newvalue === newcrv) {
     return 'selected'
   } else {
     return ''
   }
 })
+
+
 usePassport(app)
 
 app.use(flash())  // 掛載套件
