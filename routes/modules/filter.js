@@ -60,11 +60,15 @@ const categoryList = {
 
 
 router.post("/filter", (req, res) => {
+  const userId = req.user._id
   const selectMonth = req.body.month
-  const selectCategory = categoryList[req.body.category]
+  const selectCategory = req.body.category
+  const filter = []
+
+  console.log('req.body', req.body)
   console.log('selectMonth是', selectMonth)
   console.log('selectCategory是', selectCategory)
-  const filter = []
+
 
   if (selectMonth && selectCategory) {
     filter.push({ date: monthRange[selectMonth], category: selectCategory })
@@ -76,8 +80,12 @@ router.post("/filter", (req, res) => {
     filter.push({ category: selectCategory })
   }
 
+  filter[0]['userId'] = userId  //把userId納入 用於資料庫中 使id 與 filter關聯
   console.log('現在的filter', filter)
-  console.log(filter.length)
+
+  console.log(filter[0].length)
+
+
 
   return Records.find(filter[0])
     .lean()
@@ -87,7 +95,7 @@ router.post("/filter", (req, res) => {
       // console.log(records)
       totalAmount = records.map(record => record.amount).reduce((accumulator, currentValue) => { return accumulator + currentValue }, 0)
 
-      if (!filter.length) {
+      if (!filter[0].date && !filter[0].category) {  //唯一的filter為id時,就是沒有任何月份與category的filter
         return res.redirect('/')
       }
       res.render('index', { records, totalAmount, monthList, selectMonth, selectCategory })

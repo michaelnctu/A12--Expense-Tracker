@@ -29,25 +29,29 @@ db.once('open', () => {
             name: "午餐",
             category: "餐飲食品",
             date: "2020-08-03",
-            amount: "80"
+            amount: "80",
+            userId: userId
           },
           {
             name: "健身",
             category: "休閒娛樂",
             date: "2020-08-03",
-            amount: "50"
+            amount: "50",
+            userId: userId
           },
           {
             name: "房租",
             category: "家居物業",
             date: "2020-08-03",
-            amount: "120000"
+            amount: "120000",
+            userId: userId
           },
           {
             name: "搭公車",
             category: "交通出行",
             date: "2020-08-03",
-            amount: "36"
+            amount: "36",
+            userId: userId
           }
         )
       )

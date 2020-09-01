@@ -1,6 +1,8 @@
 const Category = require('../category')
 const db = require('../../config/mongoose')
 
+
+
 db.once('open', () => {
   console.log('mongodb conneted!')
   Category.create(

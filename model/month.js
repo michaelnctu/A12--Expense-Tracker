@@ -29,9 +29,9 @@ for (let i = 1; i <= 7; i++) {
 
 for (let i = 8; i <= 12; i++) {
   if ((i % 2) === 0) {
-    monthRange[monthList[i - 1]] = { $gte: `2020-0${i}-01`, $lte: `2020-0${i}-30` }
-  } else {
     monthRange[monthList[i - 1]] = { $gte: `2020-0${i}-01`, $lte: `2020-0${i}-31` }
+  } else {
+    monthRange[monthList[i - 1]] = { $gte: `2020-0${i}-01`, $lte: `2020-0${i}-30` }
   }
 }
 
